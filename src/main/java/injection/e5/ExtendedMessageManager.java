@@ -4,10 +4,16 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("classpath:META-INF/application.properties")
 public class ExtendedMessageManager {
+	
+	@Autowired
+    private Environment environment;
 
     private ExtendedMessageService messageService1;
 
@@ -15,7 +21,7 @@ public class ExtendedMessageManager {
 
     @PostConstruct
     public void postConstruct() {
-        messageService1.setPrefix("prefix");
+        messageService1.setPrefix(environment.getProperty("e5.prefix"));
     }
 
     // Se inyecta un objeto de la clase indicada
